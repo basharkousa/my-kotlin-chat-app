@@ -1,3 +1,9 @@
 package com.bashar.mychatapp.src.data.models
 
-data class User(var name: String){}
+
+data class User(
+    val id: Int,
+    val name: String,
+    val email: String,
+    val password: String
+)

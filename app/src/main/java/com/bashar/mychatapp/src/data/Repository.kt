@@ -1,15 +1,38 @@
 package com.bashar.mychatapp.src.data
 
 import com.bashar.mychatapp.src.data.local.LocalDataSource
+import com.bashar.mychatapp.src.data.models.User
 import com.bashar.mychatapp.src.data.models.base.BaseApiResponse
 import com.bashar.mychatapp.src.data.remote.RemoteDataSource
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ActivityRetainedScoped
 class Repository @Inject constructor(
     private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource
 ) : BaseApiResponse() {
+
+    suspend fun doAllTransActions() = withContext(Dispatchers.IO){
+        localDataSource.doAllTransActions()
+    }
+
+    fun getAllUsers() = localDataSource.getAllUsers().flowOn(Dispatchers.IO)
+
+    fun getUserUserByEmail(email: String): Flow<User?> = flow{
+        localDataSource.getUserByEmail(email).collect{
+            if(it != null){
+                emit(it.toUser())
+            }else{
+                emit(null)
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
 
 //    suspend fun getArtists(artistName: String): Flow<NetworkResult<ArtistsResponse>> {
 //        return flow<NetworkResult<ArtistsResponse>> {

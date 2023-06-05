@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.bashar.mychatapp.src.data.local.LocalDataSource
 import com.bashar.mychatapp.src.data.local.datasources.room.AppDatabase
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.TableDao
+import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,13 +32,14 @@ object DatabaseModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideTableDao(appDatabase: AppDatabase): TableDao = appDatabase.tableDao()
 
     @Provides
     @Singleton
-    fun provideLocalDataSource(tableDao: TableDao): LocalDataSource =
-        LocalDataSource(tableDao)
+    fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao()
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(userDao: UserDao,): LocalDataSource =
+        LocalDataSource(userDao)
 
 }

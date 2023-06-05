@@ -5,9 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bashar.mychatapp.src.data.local.datasources.room.convertor.DateConverter
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.TableDao
+import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.TableEntity
+import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 
-@Database(entities = [TableEntity::class], version = 1, exportSchema = false)
+@Database(entities = [UserEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -15,6 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
         val DATABASE_NAME = "myAppdb"
     }
 
-    abstract fun tableDao(): TableDao
+//    abstract fun tableDao(): TableDao
+    abstract fun userDao(): UserDao
 
 }

@@ -13,7 +13,7 @@ class UserViewModel @Inject constructor(
 ) : ViewModel(){
 
     var list  = mutableListOf<String>("Bahsra","Kousa","mksjkao")
-    var message = "Hello My Template"
+    var message = "Hello My Templateeeee"
 
 
 }
