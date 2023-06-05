@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.splashFragment.SplashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:label="splash_fragment"
+        >
+
+        <!--        app:popUpTo="@id/navigation_main"-->
+        <!--        app:popUpToInclusive="true" to indicate that the destination specified in app:popUpTo should also be removed from the back stack.-->
+        <!--        app:popUpToInclusive="true"-->
+        <action
+            android:id="@+id/action_splashFragment_to_first"
+            app:destination="@id/FirstFragment"
+
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/enter_pop"
+            app:popExitAnim="@anim/exit_pop"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.SecondFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+</navigation>
