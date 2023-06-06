@@ -1,36 +1,32 @@
-package com.bashar.mychatapp.src.ui.fragments.usersFragment
+package com.bashar.mychatapp.src.ui.fragments.chatsFragment
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bashar.mychatapp.R
+import com.bashar.mychatapp.databinding.FragmentChatsBinding
 import com.bashar.mychatapp.databinding.FragmentUsersBinding
-import com.bashar.mychatapp.src.data.models.User
 import com.bashar.mychatapp.src.ui.activities.MainActivity
 import com.bashar.mychatapp.src.ui.base.BaseFragment
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
-import com.bashar.mychatapp.src.utils.SpacesItemDecoration
 import com.bashar.mychatapp.src.viewmodels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
-
 @AndroidEntryPoint
-class UsersFragment : BaseFragment<UserViewModel, FragmentUsersBinding>() {
+class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
 
 
-    override val viewModel: UserViewModel by activityViewModels()
-    override val layoutRes: Int = R.layout.fragment_users
+    override val viewModel: ChatsViewModel by viewModels()
+    override val layoutRes: Int = R.layout.fragment_chats
 
     override fun initEvents() {
-        dataBinding?.buttonSecond?.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+//        dataBinding?.buttonSecond?.setOnClickListener {
+//            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+//        }
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {
@@ -54,10 +50,10 @@ class UsersFragment : BaseFragment<UserViewModel, FragmentUsersBinding>() {
                 adapter: GlobalAdapter<Any>,
             ) {
                 when (item) {
-                    is User -> {
+                    is String -> {
                         when (view.id) {
                             R.id.card_user -> {
-                                navigateTo(UsersFragmentDirections.actionUsersFragmentToChatsFragment(item))
+                                parent?.showToastMessage(item)
                             }
 //                            R.id.tv_artist_name -> {
 //                                Toast.makeText(parent, "$position ${item.name}", Toast.LENGTH_SHORT)
@@ -116,8 +112,27 @@ class UsersFragment : BaseFragment<UserViewModel, FragmentUsersBinding>() {
            If you want to consider this action just remove the 'orientation' from the configChanges in
            manifest file
         */
+
+//        layoutManager =
+//            if (parent!!.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(
+//                parent!!.applicationContext, 2
+//            ) else GridLayoutManager(parent!!.applicationContext, 3)
+//        dataBinding!!.recycler.layoutManager = layoutManager
+//        dataBinding!!.recycler.addItemDecoration(
+//            SpacesItemDecoration(
+//                parent!!.resources.getDimension(R.dimen.d0_4)
+//                    .toInt()
+//            )
+//        )
         layoutManager = LinearLayoutManager(parent!!.applicationContext)
         dataBinding?.recycler?.layoutManager = layoutManager
 
+        //init_listener();
+//        if (adapter == null) {
+//            dataBinding.recycler.setAdapter(adapter);
+//            dataBinding.recycler.addItemDecoration(new SpacesItemDecoration((int) parent.getResources().getDimension(R.dimen.d0_4)));
+//            // Open subject when click on it
+//
+//        }
     }
 }

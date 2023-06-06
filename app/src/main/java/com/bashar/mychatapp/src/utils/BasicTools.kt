@@ -1,5 +1,6 @@
 package com.bashar.mychatapp.src.utils
 
+import android.R
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -20,9 +21,11 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bashar.mychatapp.BuildConfig
 import com.bashar.mychatapp.src.ui.base.BaseAdapter
 import com.bashar.mychatapp.src.ui.listeners.OnBottomReached
 import java.util.*
+
 
 object BasicTools {
 
@@ -68,6 +71,12 @@ object BasicTools {
 
     fun hideSoftKeyboard_adjust(activity: Activity) {
         activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    fun getURLForResource(resourceId: Int): String {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID + "/" + resourceId)
+            .toString()
     }
 
 

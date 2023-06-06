@@ -10,12 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.databinding.library.baseAdapters.BR
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.src.data.models.base.NetworkResult
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
 import com.bashar.mychatapp.src.utils.AnimationUtils
+import androidx.databinding.library.baseAdapters.BR
+
 
 import com.bumptech.glide.Glide
 
@@ -85,7 +86,7 @@ object BindingAdapterss {
     fun loadImage(view: View, url: String) {
 //        Log.e("OSA_", url[1].text)
         val imageView = view as ImageView
-        Glide.with(imageView.context).asBitmap().load(url).into(imageView)
+        Glide.with(imageView.context).load(url).into(imageView)
     }
 
     @BindingAdapter("html")

@@ -19,6 +19,7 @@
         app:cardCornerRadius="@dimen/d0_8"
         android:layout_margin="@dimen/d1_8"
         android:elevation="@dimen/d0_8"
+        android:onClick="@{click::onClick}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,6 +28,7 @@
            android:orientation="horizontal"
            android:layout_height="wrap_content">
            <ImageView
+               imgUrl="@{model.image}"
                app:civ_border_width="4dp"
                android:layout_margin="@dimen/d0_8"
                android:src="@drawable/basharkousa00945574056"

@@ -24,7 +24,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".src.ui.fragments.SecondFragment"
         android:background="?android:colorBackground">
 
         <LinearLayout
@@ -47,7 +46,7 @@
                 android:textSize="@dimen/medium_text"
                 android:layout_margin="@dimen/d1_8"
                 android:fontFamily="@font/poppins_medium"
-                android:gravity="start"
+                android:gravity="center"
                 android:text="@string/log_in_into_your_account"
                 />
 

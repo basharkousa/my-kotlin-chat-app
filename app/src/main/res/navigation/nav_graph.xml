@@ -16,15 +16,7 @@
         <!--        app:popUpTo="@id/navigation_main"-->
         <!--        app:popUpToInclusive="true" to indicate that the destination specified in app:popUpTo should also be removed from the back stack.-->
         <!--        app:popUpToInclusive="true"-->
-        <action
-            android:id="@+id/action_splashFragment_to_first"
-            app:destination="@id/FirstFragment"
 
-            app:enterAnim="@anim/enter"
-            app:exitAnim="@anim/exit"
-            app:popEnterAnim="@anim/enter_pop"
-            app:popExitAnim="@anim/exit_pop"
-            />
         <action
             android:id="@+id/action_splashFragment_to_UsersFragment"
             app:destination="@id/UsersFragment"
@@ -57,13 +49,25 @@
     </fragment>
 
     <fragment
+        android:id="@+id/ChatsFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.chatsFragment.ChatsFragment"
+        android:label="@string/chats_fragment_label"
+        tools:layout="@layout/fragment_chats">
+
+        <argument
+            android:name="album"
+            app:argType="com.bashar.mychatapp.src.data.models.User" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/UsersFragment"
         android:name="com.bashar.mychatapp.src.ui.fragments.usersFragment.UsersFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_users">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_UsersFragment_to_ChatsFragment"
+            app:destination="@id/ChatsFragment" />
     </fragment>
 </navigation>

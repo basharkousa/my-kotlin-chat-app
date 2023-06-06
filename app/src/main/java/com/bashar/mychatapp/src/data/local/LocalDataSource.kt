@@ -6,6 +6,7 @@ import com.bashar.mychatapp.R
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 import com.bashar.mychatapp.src.data.models.User
+import com.bashar.mychatapp.src.utils.BasicTools
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -24,8 +25,8 @@ class LocalDataSource @Inject constructor(private val userDao: UserDao) {
         userDao.deleteAllUsers()
 
         val users = listOf(
-            User(1, "Bashar", "basharkousax@gmail.com", password = "123456789", R.drawable.basharkousa00945574056),
-            User(2, "Osama", "osamaspero@gmail.com", password = "123456789",R.drawable.iv_user_osama),
+            User(1, "Bashar", "basharkousax@gmail.com", password = "123456789", BasicTools.getURLForResource(R.drawable.basharkousa00945574056)),
+            User(2, "Osama", "osamaspero@gmail.com", password = "123456789",BasicTools.getURLForResource(R.drawable.iv_user_osama)),
         )
         users.forEach { user ->
             userDao.insertUser(UserEntity.from(user))
