@@ -18,7 +18,6 @@ class SplashViewModel @Inject constructor(
 
     init {
         println("TRANSACTIONS STARTS HERE:")
-
         doTransactions()
         showAllUsers()
         getUserByEmail()

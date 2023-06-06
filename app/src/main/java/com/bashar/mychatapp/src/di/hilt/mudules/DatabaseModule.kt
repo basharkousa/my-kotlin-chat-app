@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.room.Room
 import com.bashar.mychatapp.src.data.local.LocalDataSource
 import com.bashar.mychatapp.src.data.local.datasources.room.AppDatabase
-import com.bashar.mychatapp.src.data.local.datasources.room.dao.TableDao
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import dagger.Module
 import dagger.Provides

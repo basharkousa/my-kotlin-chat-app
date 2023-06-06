@@ -10,7 +10,8 @@ data class UserEntity(
     @PrimaryKey val id: Int,
     val name: String,
     val email: String,
-    val password: String
+    val password: String,
+    var image:Int
 ){
 
     companion object {
@@ -19,7 +20,8 @@ data class UserEntity(
                 email = user.email ?: "invalidEmail",
                 id = user.id,
                 password = user.password,
-                name = user.name
+                name = user.name,
+                image = user.image
                 )
         }
     }
@@ -30,6 +32,7 @@ data class UserEntity(
             email = email,
             password = password,
             name = name,
+            image = image
         )
     }
 

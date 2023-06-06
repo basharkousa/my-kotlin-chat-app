@@ -2,7 +2,7 @@ package com.bashar.mychatapp.src.data.local
 
 
 import androidx.room.Transaction
-import com.bashar.mychatapp.src.data.local.datasources.room.dao.TableDao
+import com.bashar.mychatapp.R
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 import com.bashar.mychatapp.src.data.models.User
@@ -20,9 +20,12 @@ class LocalDataSource @Inject constructor(private val userDao: UserDao) {
 
     @Transaction
     fun doAllTransActions() {
+
+        userDao.deleteAllUsers()
+
         val users = listOf(
-            User(1, "Bashar", "basharkousax@gmail.com", password = "123456789"),
-            User(2, "Osama", "osamaspero@gmail.com", password = "123456789"),
+            User(1, "Bashar", "basharkousax@gmail.com", password = "123456789", R.drawable.basharkousa00945574056),
+            User(2, "Osama", "osamaspero@gmail.com", password = "123456789",R.drawable.iv_user_osama),
         )
         users.forEach { user ->
             userDao.insertUser(UserEntity.from(user))
