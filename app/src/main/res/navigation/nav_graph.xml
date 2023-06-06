@@ -25,6 +25,14 @@
             app:popEnterAnim="@anim/enter_pop"
             app:popExitAnim="@anim/exit_pop"
             />
+        <action
+            android:id="@+id/action_splashFragment_to_UsersFragment"
+            app:destination="@id/UsersFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/enter_pop"
+            app:popExitAnim="@anim/exit_pop"
+            />
     </fragment>
 
     <fragment
@@ -42,6 +50,17 @@
         android:name="com.bashar.mychatapp.src.ui.fragments.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/UsersFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.usersFragment.UsersFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_users">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

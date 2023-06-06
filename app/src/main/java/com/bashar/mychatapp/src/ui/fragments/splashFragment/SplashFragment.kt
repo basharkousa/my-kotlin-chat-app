@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.databinding.FragmentSplashBinding
 import com.bashar.mychatapp.src.ui.base.BaseFragment
+import com.bashar.mychatapp.src.ui.fragments.usersFragment.UsersFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,9 @@ class SplashFragment : BaseFragment<SplashViewModel,FragmentSplashBinding>() {
 //          parent?.showToastMessage("HEy")
 //          parent?.navController?.navigate(SplashFragmentDirections.actionSplashFragmentToRootFragment())
 
-          navigateTo(SplashFragmentDirections.actionSplashFragmentToFirst())
+//          navigateTo(SplashFragmentDirections.actionSplashFragmentToFirst())
+
+          navigateTo(SplashFragmentDirections.actionSplashFragmentToUsersFragment())
 //          findNavController().navigate(R.id.action_splashFragment_to_rootFragment)
 
       }

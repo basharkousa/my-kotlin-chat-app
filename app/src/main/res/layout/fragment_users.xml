@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bashar.mychatapp.src.viewmodels.UserViewModel" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="click"
+            type="View.OnClickListener" />
+
+        <variable
+            name="itemclick"
+            type="com.bashar.mychatapp.src.ui.listeners.RvClickListener" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".src.ui.fragments.SecondFragment"
+        android:background="?android:colorBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical">
+
+           <ImageView
+               android:layout_width="200dp"
+               android:layout_height="200dp"
+               android:scaleType="fitCenter"
+               android:src="@mipmap/ic_launcher_foreground"
+               />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/medium_text"
+                android:layout_margin="@dimen/d1_8"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="start"
+                android:text="@string/log_in_into_your_account"
+                />
+
+            <Button
+                android:id="@+id/button_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/previous"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_second" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                click="@{itemclick}"
+                layout="@{@layout/card_user}"
+                list="@{viewModel.usersList}"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                />
+        </LinearLayout>
+    </FrameLayout>
+</layout>
