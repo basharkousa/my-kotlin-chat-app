@@ -32,9 +32,10 @@ class ChatsViewModel @Inject constructor(
     private fun getAllChats(userId: Int) = viewModelScope.launch {
 
         repository.getAllChats(userId).collect{ chats ->
+//            chatsList?.addAll(chats)
             chats.forEach {
-                println(it.toChat().toString())
-                chatsList?.add(it.toChat())
+                println(it.toString())
+                chatsList?.add(it)
             }
         }
     }

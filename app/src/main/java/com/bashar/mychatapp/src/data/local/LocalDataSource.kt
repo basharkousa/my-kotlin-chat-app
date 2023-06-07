@@ -16,7 +16,10 @@ import com.bashar.mychatapp.src.utils.BasicTools
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @Module
@@ -72,13 +75,13 @@ class LocalDataSource @Inject constructor(
 
 
         val messages = listOf(
-            Message(1, 1, 2,1,"Hello Osama","msg" ,System.currentTimeMillis()),
-            Message(2, 2, 1,1,"Hello Bashar","msg" ,System.currentTimeMillis() + 1000),
-            Message(3, 1, 2,1,"How are you?","msg" ,System.currentTimeMillis() + 2000),
-            Message(4, 2, 1,1,"Doing well, thanks","msg" ,System.currentTimeMillis() + 3000),
-            Message(5, 1, 2,1,"Same here","msg" ,System.currentTimeMillis() + 4000),
-            Message(6, 2, 1,1,"Great!","msg" ,System.currentTimeMillis() + 5000),
-            Message(7, 1, 2,1,"What r u doing today?","msg" ,System.currentTimeMillis() + 6000),
+            Message(1, 1, 2, 1, "Hello Osama", "msg", System.currentTimeMillis()),
+            Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1000),
+            Message(3, 1, 2, 1, "How are you?", "msg", System.currentTimeMillis() + 2000),
+            Message(4, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 3000),
+            Message(5, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 4000),
+            Message(6, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 5000),
+            Message(7, 1, 2, 1, "What r u doing today?", "msg", System.currentTimeMillis() + 6000),
         )
         messages.forEach { message ->
             messageDao.insertMessage(MessageEntity.from(message))
@@ -97,7 +100,34 @@ class LocalDataSource @Inject constructor(
     fun deleteAllUser() = userDao.deleteAllUsers()
 
     //Chats
-    fun getAllChats(userId: Int): Flow<List<ChatEntity>> = chatDao.getUserChats(userId)
+//    fun getAllChats(userId: Int): Flow<List<ChatEntity>> = chatDao.getUserChats(userId)
+
+    fun getAllChats(userId: Int): Flow<List<Chat>> = flow {
+
+        val chatList = mutableListOf<Chat>()
+
+        chatDao.getUserChats(userId).collect { chatEntities ->
+            chatEntities.forEach { chatEntity ->
+                val chat = chatEntity.toChat()
+
+                if (userId == chat.user2_id)
+                    chat.receiver = userDao.getUserById(chat.user1_id).toUser()
+                else
+                    chat.receiver = userDao.getUserById(chat.user2_id).toUser()
+
+                chatList.add(chat)
+            }
+            emit(chatList)
+        }
+
+//        localDataSource.getUserByEmail(email).collect{
+//            if(it != null){
+//                emit(it.toUser())
+//            }else{
+//                emit(null)
+//            }
+//        }
+    }.flowOn(Dispatchers.IO)
 
 //    fun insertAlbum(album: Album) {
 //        println("LocalDataSource ${album.name}")
