@@ -1,12 +1,14 @@
 package com.bashar.mychatapp.src.ui.fragments.splashFragment
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bashar.mychatapp.src.data.Repository
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +23,14 @@ class SplashViewModel @Inject constructor(
         doTransactions()
         showAllUsers()
         getUserByEmail()
+        goToUsersPage()
+    }
+
+    var navigateLivedata: MutableLiveData<Boolean> = MutableLiveData(false)
+    fun goToUsersPage() = viewModelScope.launch {
+       delay(2000)
+       navigateLivedata.value =  true
+
     }
 
     private fun doTransactions() = viewModelScope.launch {

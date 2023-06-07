@@ -69,6 +69,7 @@
                                 android:layout_marginEnd="@dimen/d0_2"
                                 android:background="@drawable/circle"
                                 imgUrl="@{viewModel.user.image}"
+                                circular="@{true}"
                                 android:padding="@dimen/d0_2"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/iv_user_osama" />

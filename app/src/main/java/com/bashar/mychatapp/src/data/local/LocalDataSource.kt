@@ -4,10 +4,13 @@ package com.bashar.mychatapp.src.data.local
 import androidx.room.Transaction
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.ChatDao
+import com.bashar.mychatapp.src.data.local.datasources.room.dao.MessageDao
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.ChatEntity
+import com.bashar.mychatapp.src.data.local.datasources.room.entity.MessageEntity
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 import com.bashar.mychatapp.src.data.models.Chat
+import com.bashar.mychatapp.src.data.models.Message
 import com.bashar.mychatapp.src.data.models.User
 import com.bashar.mychatapp.src.utils.BasicTools
 import dagger.Module
@@ -18,20 +21,41 @@ import javax.inject.Inject
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LocalDataSource @Inject constructor(private val userDao: UserDao,private val chatDao: ChatDao) {
-
-
+class LocalDataSource @Inject constructor(
+    private val userDao: UserDao,
+    private val chatDao: ChatDao,
+    private val messageDao: MessageDao
+) {
 
     @Transaction
     fun doAllTransActions() {
 
-        userDao.deleteAllUsers()
+        messageDao.deleteAllMessages()
         chatDao.deleteAllChats()
+        userDao.deleteAllUsers()
 
         val users = listOf(
-            User(1, "Bashar", "basharkousax@gmail.com", password = "123456789", BasicTools.getURLForResource(R.drawable.basharkousa00945574056)),
-            User(2, "Osama", "osamaspero@gmail.com", password = "123456789",BasicTools.getURLForResource(R.drawable.iv_user_osama)),
-            User(3, "Ali", "alikousous@gmail.com", password = "123456789",BasicTools.getURLForResource(R.drawable.iv_user_ali)),
+            User(
+                1,
+                "Bashar",
+                "basharkousax@gmail.com",
+                password = "123456789",
+                BasicTools.getURLForResource(R.drawable.basharkousa00945574056)
+            ),
+            User(
+                2,
+                "Osama",
+                "osamaspero@gmail.com",
+                password = "123456789",
+                BasicTools.getURLForResource(R.drawable.iv_user_osama)
+            ),
+            User(
+                3,
+                "Ali",
+                "alikousous@gmail.com",
+                password = "123456789",
+                BasicTools.getURLForResource(R.drawable.iv_user_ali)
+            ),
         )
         users.forEach { user ->
             userDao.insertUser(UserEntity.from(user))
@@ -46,20 +70,24 @@ class LocalDataSource @Inject constructor(private val userDao: UserDao,private v
             chatDao.insertChat(ChatEntity.from(chat))
         }
 
-//
-//        val messages = listOf(
-//            Message(1, 1, "Hello", System.currentTimeMillis()),
-//            Message(2, 2, "Hi there", System.currentTimeMillis() + 1000),
-//            Message(3, 1, "How are you?", System.currentTimeMillis() + 2000),
-//            Message(4, 3, "Hey guys", System.currentTimeMillis() + 3000),
-//            Message(5, 2, "Doing well, thanks", System.currentTimeMillis() + 4000),
-//            Message(6, 3, "Same here", System.currentTimeMillis() + 5000),
-//            Message(7, 1, "Great!", System.currentTimeMillis() + 6000)
-//        )
-//        messageDao.insertAll(messages)
+
+        val messages = listOf(
+            Message(1, 1, 2,1,"Hello Osama","msg" ,System.currentTimeMillis()),
+            Message(2, 2, 1,1,"Hello Bashar","msg" ,System.currentTimeMillis() + 1000),
+            Message(3, 1, 2,1,"How are you?","msg" ,System.currentTimeMillis() + 2000),
+            Message(4, 2, 1,1,"Doing well, thanks","msg" ,System.currentTimeMillis() + 3000),
+            Message(5, 1, 2,1,"Same here","msg" ,System.currentTimeMillis() + 4000),
+            Message(6, 2, 1,1,"Great!","msg" ,System.currentTimeMillis() + 5000),
+            Message(7, 1, 2,1,"What r u doing today?","msg" ,System.currentTimeMillis() + 6000),
+        )
+        messages.forEach { message ->
+            messageDao.insertMessage(MessageEntity.from(message))
+        }
+
     }
 
 
+    //User
     fun getUser(): Flow<UserEntity?> = userDao.user
     fun getAllUsers(): Flow<List<UserEntity>> = userDao.allUsers
     fun getUserByEmail(email: String): Flow<UserEntity?> = userDao.getUserByEmail(email)
@@ -68,6 +96,7 @@ class LocalDataSource @Inject constructor(private val userDao: UserDao,private v
     fun deleteUser(user: User) = userDao.deleteUser(UserEntity.from(user))
     fun deleteAllUser() = userDao.deleteAllUsers()
 
+    //Chats
     fun getAllChats(userId: Int): Flow<List<ChatEntity>> = chatDao.getUserChats(userId)
 
 //    fun insertAlbum(album: Album) {

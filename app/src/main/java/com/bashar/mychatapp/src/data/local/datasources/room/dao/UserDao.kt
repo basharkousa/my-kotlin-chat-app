@@ -31,10 +31,10 @@ interface UserDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(userEntity: UserEntity)
 
-    @Delete
-    fun deleteUser(userEntity: UserEntity?)
+    @Delete()
+    fun deleteUser(userEntity: UserEntity?,)
 
-    @Query("DELETE FROM Users")
+    @Query("DELETE FROM Users",)
     fun deleteAllUsers()
 }
 

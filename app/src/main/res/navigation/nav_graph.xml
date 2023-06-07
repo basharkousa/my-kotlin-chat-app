@@ -22,6 +22,8 @@
             app:destination="@id/UsersFragment"
             app:enterAnim="@anim/enter"
             app:exitAnim="@anim/exit"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_graph"
             app:popEnterAnim="@anim/enter_pop"
             app:popExitAnim="@anim/exit_pop"
             />

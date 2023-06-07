@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "My Template Kotlin App"
+rootProject.name = "My Chat Kotlin App"
 include ':app'

@@ -19,7 +19,7 @@ import com.bashar.mychatapp.src.utils.AnimationUtils
 
 
 import com.bumptech.glide.Glide
-
+import com.bumptech.glide.request.RequestOptions
 
 
 object BindingAdapterss {
@@ -81,12 +81,17 @@ object BindingAdapterss {
 
 //@JvmStatic
 
-    @BindingAdapter("imgUrl")
+    @BindingAdapter("imgUrl", "circular")
     @JvmStatic
-    fun loadImage(view: View, url: String) {
+    fun loadImage(view: View, url: String, circular: Boolean = false) {
 //        Log.e("OSA_", url[1].text)
         val imageView = view as ImageView
-        Glide.with(imageView.context).load(url).into(imageView)
+        if (circular)
+            Glide.with(imageView.context).load(url).apply(RequestOptions.circleCropTransform())
+                .into(imageView)
+        else
+            Glide.with(imageView.context).load(url).into(imageView)
+
     }
 
     @BindingAdapter("html")
@@ -95,7 +100,7 @@ object BindingAdapterss {
 //        Log.e("OSA_", url[1].text)
         val textView = view as TextView
 
-        if(!html.isNullOrEmpty()){
+        if (!html.isNullOrEmpty()) {
 
             var validHtml = "<div>$html</div>"
             val sequence: CharSequence = Html.fromHtml(validHtml)
@@ -106,7 +111,7 @@ object BindingAdapterss {
             }
             textView.text = strBuilder
             textView.movementMethod = LinkMovementMethod.getInstance()
-        }else{
+        } else {
             textView.setText(R.string.no_description)
         }
 
@@ -140,9 +145,9 @@ object BindingAdapterss {
         }
     }
 
-    @BindingAdapter("android:visibility","scaleAnim")
+    @BindingAdapter("android:visibility", "scaleAnim")
     @JvmStatic
-    fun setVisibility(view: View, visible: Boolean, scaleAnim:Boolean) {
+    fun setVisibility(view: View, visible: Boolean, scaleAnim: Boolean) {
         if (visible) {
             view.animation = AnimationUtils.getScaleAnimation()
             view.visibility = View.VISIBLE
@@ -161,26 +166,26 @@ object BindingAdapterss {
     ) {
         println("newDataUpdated")
         if (list != null) {
-             println("listSizeFromBindingAdapter${list.size}")
-             val adapter: GlobalAdapter<*>
-             if(view.adapter == null){
-                 adapter = GlobalAdapter(
-                     layout,
-                     list.toMutableList(),
+            println("listSizeFromBindingAdapter${list.size}")
+            val adapter: GlobalAdapter<*>
+            if (view.adapter == null) {
+                adapter = GlobalAdapter(
+                    layout,
+                    list.toMutableList(),
                     BR.model,
-                     clickListener = click,
-                     mapOf(BR.itemclick to click)
-                 )
-                 println("ListSize:${list.size}")
-                 view.adapter = adapter
-             }else {
-                if(view.adapter is GlobalAdapter<*>) {
+                    clickListener = click,
+                    mapOf(BR.itemclick to click)
+                )
+                println("ListSize:${list.size}")
+                view.adapter = adapter
+            } else {
+                if (view.adapter is GlobalAdapter<*>) {
                     (view.adapter as GlobalAdapter<T>).mutableList.clear()
                     (view.adapter as GlobalAdapter<T>).addItems(list.toMutableList())
                 }
-             }
+            }
 
-        }else{
+        } else {
             println("listSizeFromBindingAdapterElse${list?.size}")
         }
     }
