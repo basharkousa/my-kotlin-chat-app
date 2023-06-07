@@ -22,10 +22,10 @@
             app:destination="@id/UsersFragment"
             app:enterAnim="@anim/enter"
             app:exitAnim="@anim/exit"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/nav_graph"
             app:popEnterAnim="@anim/enter_pop"
             app:popExitAnim="@anim/exit_pop"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_graph"
             />
     </fragment>
 
@@ -70,6 +70,11 @@
 
         <action
             android:id="@+id/action_UsersFragment_to_ChatsFragment"
-            app:destination="@id/ChatsFragment" />
+            app:destination="@id/ChatsFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/enter_pop"
+            app:popExitAnim="@anim/exit_pop"
+            />
     </fragment>
 </navigation>

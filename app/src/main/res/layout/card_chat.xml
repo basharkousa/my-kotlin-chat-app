@@ -65,6 +65,20 @@
                     android:singleLine="true"
                     android:textSize="14sp" />
 
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_margin="@dimen/d0_8"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    android:fontFamily="sans-serif"
+                    android:minWidth="100dp"
+                    android:text="10:06 am"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
 
             </RelativeLayout>
         </LinearLayout>
