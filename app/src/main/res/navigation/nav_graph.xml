@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_chats">
 
         <argument
-            android:name="album"
+            android:name="User"
             app:argType="com.bashar.mychatapp.src.data.models.User" />
 
     </fragment>

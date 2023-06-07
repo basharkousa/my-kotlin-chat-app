@@ -67,7 +67,7 @@
                                 android:layout_height="@dimen/d4"
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/d0_2"
-                                android:background="@drawable/iv_user_osama"
+                                android:background="@drawable/circle"
                                 imgUrl="@{viewModel.user.image}"
                                 android:padding="@dimen/d0_2"
                                 android:scaleType="centerInside"
@@ -80,7 +80,7 @@
                                 android:ellipsize="marquee"
                                 android:gravity="center"
                                 android:padding="@dimen/d0_2"
-                                android:text="@{viewModel.user.name +`s`}"
+                                android:text="@{viewModel.user.name +`'s`}"
                                 android:textColor="@color/primary"
                                 android:textSize="@dimen/medium_text"
                                 android:textStyle="bold" />
