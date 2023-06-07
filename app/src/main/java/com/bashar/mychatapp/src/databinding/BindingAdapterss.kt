@@ -10,12 +10,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bashar.mychatapp.BR
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.src.data.models.base.NetworkResult
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
 import com.bashar.mychatapp.src.utils.AnimationUtils
-import androidx.databinding.library.baseAdapters.BR
 
 
 import com.bumptech.glide.Glide

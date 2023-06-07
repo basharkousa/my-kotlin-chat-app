@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="model"
+            type= "com.bashar.mychatapp.src.data.models.Chat" />
+
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Chat1"
+            tools:layout_editor_absoluteX="199dp"
+            tools:layout_editor_absoluteY="246dp" />
+    </androidx.cardview.widget.CardView>
+</layout>

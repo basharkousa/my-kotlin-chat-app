@@ -110,8 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/d4"
                 click="@{itemclick}"
-                layout="@{@layout/card_user}"
-                list="@{viewModel.usersList}"
+                layout="@{@layout/card_chat}"
+                list="@{viewModel.chatsList}"
                 android:orientation="vertical"
                 android:scrollbars="vertical"
                 />

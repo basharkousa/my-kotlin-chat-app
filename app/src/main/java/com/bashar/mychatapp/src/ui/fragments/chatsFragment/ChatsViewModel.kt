@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bashar.mychatapp.src.data.Repository
+import com.bashar.mychatapp.src.data.models.Chat
 import com.bashar.mychatapp.src.data.models.User
 import com.bashar.mychatapp.src.utils.MutableListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,18 +21,20 @@ class ChatsViewModel @Inject constructor(
 
     var user: User? = null
 
-    var usersList: MutableListLiveData<User?>? = MutableListLiveData(mutableListOf())
+    var chatsList: MutableListLiveData<Chat?>? = MutableListLiveData(mutableListOf())
 
     init {
         user = savedStateHandle.get<User>("User")
         println("CHAT_FRAGMENT: ${user?.name}")
+        getAllChats(user?.id?:1)
     }
 
-    private fun showAllUsers() = viewModelScope.launch {
-        repository.getAllUsers().collect{ users ->
-            users.forEach {
-                println(it.toUser().toString())
-                usersList?.add(it.toUser())
+    private fun getAllChats(userId: Int) = viewModelScope.launch {
+
+        repository.getAllChats(userId).collect{ chats ->
+            chats.forEach {
+                println(it.toChat().toString())
+                chatsList?.add(it.toChat())
             }
         }
     }

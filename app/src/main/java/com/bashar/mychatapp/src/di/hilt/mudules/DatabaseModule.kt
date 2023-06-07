@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import com.bashar.mychatapp.src.data.local.LocalDataSource
 import com.bashar.mychatapp.src.data.local.datasources.room.AppDatabase
+import com.bashar.mychatapp.src.data.local.datasources.room.dao.ChatDao
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -38,7 +39,11 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideLocalDataSource(userDao: UserDao,): LocalDataSource =
-        LocalDataSource(userDao)
+    fun provideChatDao(appDatabase: AppDatabase): ChatDao = appDatabase.chatDao()
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(userDao: UserDao,chatDao: ChatDao): LocalDataSource =
+        LocalDataSource(userDao,chatDao)
 
 }

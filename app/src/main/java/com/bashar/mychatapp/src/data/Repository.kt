@@ -22,6 +22,7 @@ class Repository @Inject constructor(
     }
 
     fun getAllUsers() = localDataSource.getAllUsers().flowOn(Dispatchers.IO)
+    fun getAllChats(userId: Int) = localDataSource.getAllChats(userId).flowOn(Dispatchers.IO)
 
     fun getUserUserByEmail(email: String): Flow<User?> = flow{
         localDataSource.getUserByEmail(email).collect{
