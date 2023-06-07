@@ -15,4 +15,5 @@
     <string name="hello_my_template">Hello My Template</string>
     <string name="log_in_into_your_account">Login into your account</string>
     <string name="chats">chats</string>
+    <string name="conversation_fragment_label">Conversation Fragment</string>
 </resources>

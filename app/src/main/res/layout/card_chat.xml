@@ -16,6 +16,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_chat"
         android:elevation="@dimen/d0_4"
+        android:onClick="@{click::onClick}"
         android:layout_margin="@dimen/d0_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

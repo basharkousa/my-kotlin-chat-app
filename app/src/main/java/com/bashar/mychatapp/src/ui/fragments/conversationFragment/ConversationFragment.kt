@@ -1,28 +1,27 @@
-package com.bashar.mychatapp.src.ui.fragments.chatsFragment
+package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.databinding.FragmentChatsBinding
-import com.bashar.mychatapp.databinding.FragmentUsersBinding
-import com.bashar.mychatapp.src.data.models.Chat
+import com.bashar.mychatapp.databinding.FragmentConversationBinding
 import com.bashar.mychatapp.src.ui.activities.MainActivity
 import com.bashar.mychatapp.src.ui.base.BaseFragment
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
+import com.bashar.mychatapp.src.ui.fragments.chatsFragment.ChatsViewModel
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
-import com.bashar.mychatapp.src.viewmodels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
 @AndroidEntryPoint
-class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
+class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConversationBinding>() {
 
 
-    override val viewModel: ChatsViewModel by viewModels()
-    override val layoutRes: Int = R.layout.fragment_chats
+    override val viewModel: ConversationViewModel by viewModels()
+    override val layoutRes: Int = R.layout.fragment_conversation
 
     override fun initEvents() {
 //        dataBinding?.buttonSecond?.setOnClickListener {
@@ -51,10 +50,10 @@ class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
                 adapter: GlobalAdapter<Any>,
             ) {
                 when (item) {
-                    is Chat -> {
+                    is String -> {
                         when (view.id) {
-                            R.id.card_chat -> {
-                                navigateTo(ChatsFragmentDirections.actionChatsFragmentToConversationFragment(item))
+                            R.id.card_user -> {
+                                parent?.showToastMessage(item)
                             }
 //                            R.id.tv_artist_name -> {
 //                                Toast.makeText(parent, "$position ${item.name}", Toast.LENGTH_SHORT)

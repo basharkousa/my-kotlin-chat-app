@@ -59,6 +59,9 @@
         <argument
             android:name="User"
             app:argType="com.bashar.mychatapp.src.data.models.User" />
+        <action
+            android:id="@+id/action_ChatsFragment_to_ConversationFragment"
+            app:destination="@id/ConversationFragment" />
 
     </fragment>
 
@@ -77,4 +80,17 @@
             app:popExitAnim="@anim/exit_pop"
             />
     </fragment>
+
+    <fragment
+        android:id="@+id/ConversationFragment"
+        android:name="com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationFragment"
+        android:label="@string/conversation_fragment_label"
+        tools:layout="@layout/fragment_conversation">
+
+        <argument
+            android:name="Chat"
+            app:argType="com.bashar.mychatapp.src.data.models.Chat" />
+
+    </fragment>
+
 </navigation>
