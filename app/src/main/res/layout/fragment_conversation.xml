@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationViewModel" />
@@ -208,7 +210,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_weight="70"
-
+                    tools:visibility="gone"
+                    android:visibility="@{viewModel.isRecording ? View.GONE : View.VISIBLE}"
                     android:background="@android:color/transparent"
                     android:hint="@string/enter_message"
                     android:importantForAutofill="no"
@@ -220,6 +223,27 @@
                     android:text="@={viewModel.newMessageText}"
 
                     />
+                <FrameLayout
+                    android:visibility="@{viewModel.isRecording ? View.VISIBLE : View.GONE}"
+                    android:id="@+id/recording_space"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="70"
+                    android:background="@android:color/transparent"
+                    android:maxHeight="100dp"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="20dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0:04 Recording..."
+                        android:textColor="@color/green"
+                        />
+                </FrameLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -242,7 +266,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:id="@+id/record_btn_parent"
-                    android:onClick="@{() -> viewModel.sendMessagePressed()}"
+                    android:visibility="@{viewModel.isRecording ? View.GONE : View.VISIBLE}"
+                    android:onClick="@{() -> viewModel.recordVoice()}"
                     >
                     <ImageView
                         android:layout_height="44dp"
@@ -259,8 +284,9 @@
                     app:cardCornerRadius="22dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
+                    android:visibility="@{viewModel.isRecording ? View.VISIBLE : View.GONE}"
                     android:id="@+id/stop_record_btn_parent"
-                    android:onClick="@{() -> viewModel.sendMessagePressed()}"
+                    android:onClick="@{() -> viewModel.stopRecordVoice()}"
                     >
                     <ImageView
                         android:layout_height="44dp"

@@ -73,7 +73,14 @@ class ConversationViewModel @Inject constructor(
     }
 
     val isRecording = MutableLiveData<Boolean>(false)
+
     fun recordVoice() = viewModelScope.launch {
+        isRecording.value?.let {
+            isRecording.value = !it
+        }
+    }
+
+    fun stopRecordVoice() = viewModelScope.launch {
         isRecording.value?.let {
             isRecording.value = !it
         }
