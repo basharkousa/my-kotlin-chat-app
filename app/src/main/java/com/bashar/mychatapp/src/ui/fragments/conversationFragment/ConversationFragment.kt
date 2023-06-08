@@ -31,9 +31,9 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
     private lateinit var listAdapterObserver: RecyclerView.AdapterDataObserver
 
     override fun initEvents() {
-//        dataBinding?.buttonSecond?.setOnClickListener {
-//            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-//        }
+        dataBinding?.btnBack?.setOnClickListener {
+            parent?.navController?.navigateUp()
+        }
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {

@@ -154,6 +154,16 @@ object BindingAdapterss {
         }
     }
 
+    @BindingAdapter("android:visibility")
+    @JvmStatic
+    fun setVisibility(view: View, str: String) {
+        if (str.isNotEmpty()) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
+    }
+
     @BindingAdapter("android:visibility", "scaleAnim")
     @JvmStatic
     fun setVisibility(view: View, visible: Boolean, scaleAnim: Boolean) {

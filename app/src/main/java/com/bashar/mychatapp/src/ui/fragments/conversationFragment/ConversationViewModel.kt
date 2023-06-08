@@ -68,7 +68,14 @@ class ConversationViewModel @Inject constructor(
             repository.insertMessage(newMsg)
 //           dbRepository.updateNewMessage(chatID, newMsg)
 //           dbRepository.updateChatLastMessage(chatID, newMsg)
-            newMessageText.value = null
+            newMessageText.value = ""
+        }
+    }
+
+    val isRecording = MutableLiveData<Boolean>(false)
+    fun recordVoice() = viewModelScope.launch {
+        isRecording.value?.let {
+            isRecording.value = !it
         }
     }
 

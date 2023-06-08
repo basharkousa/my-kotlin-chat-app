@@ -76,20 +76,12 @@ class LocalDataSource @Inject constructor(
 
         val messages = listOf(
             Message(1, 1, 2, 1, "Hello Osama", "msg", System.currentTimeMillis()),
-            Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 10000),
-            Message(3, 1, 2, 1, "How are you?", "msg", System.currentTimeMillis() + 20000),
-            Message(4, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 30000),
-            Message(5, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 40000),
-            Message(6, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 50000),
+            Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1000),
+            Message(3, 1, 2, 1, "How are you?", "msg", System.currentTimeMillis() + 2000),
+            Message(4, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 3000),
+            Message(5, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 4000),
+            Message(6, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 5000),
             Message(7, 1, 2, 1, "What r u doing today?", "msg", System.currentTimeMillis() + 6000),
-
-            Message(8, 1, 2, 1, "Hello Osama dn sdnsj ndaksjn dkjasndkjasndkjasndkjansdkjasndjknaskjdn jksadn dad nkasjdnkajsndjkasnd", "msg", System.currentTimeMillis() + 6500),
-            Message(9, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 7000),
-            Message(10, 1, 2, 1, "H", "msg", System.currentTimeMillis() + 8000),
-            Message(11, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 9000),
-            Message(12, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 10000),
-            Message(13, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 11000),
-            Message(14, 1, 2, 1, "What r u doing today?", "msg", System.currentTimeMillis() + 12000),
 
             )
         messages.forEach { message ->

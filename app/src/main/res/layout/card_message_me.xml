@@ -5,11 +5,6 @@
 
     <data>
 
-<!--        <import type="android.view.View" />-->
-<!--        <variable-->
-<!--            name="click"-->
-<!--            type="android.view.View.OnClickListener" />-->
-
         <variable
             name="viewModel"
             type="com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationViewModel" />
@@ -42,8 +37,8 @@
         android:clickable="true"
         android:gravity="end"
         android:layout_marginTop="@dimen/d1_8"
-        android:layout_marginStart="@dimen/d0_4"
-        android:layout_marginEnd="@dimen/d0_8"
+        android:layout_marginStart="@dimen/d0_8"
+        android:layout_marginEnd="@dimen/d0_2"
         android:paddingEnd="@dimen/d1_8"
         android:paddingStart="@dimen/d0_2"
         >
@@ -87,6 +82,7 @@
                     android:padding="8dp"
                     android:textSize="16sp"
                     android:text="@{model.message}"
+                    tool:text="Hi how are you?"
                     android:textColor="@color/groupChatTextMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
