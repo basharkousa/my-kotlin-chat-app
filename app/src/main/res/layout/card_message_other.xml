@@ -22,7 +22,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp">
+        android:paddingStart="8dp"
+        android:layout_marginBottom="@dimen/d0_6"
+        >
 
 
 

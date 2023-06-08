@@ -82,6 +82,17 @@ class ConversationViewModel @Inject constructor(
 
     fun stopRecordVoice() = viewModelScope.launch {
         isRecording.value?.let {
+            val newVoiceMessage = Message(
+                message = "/file_path.mp3",
+                senderId = chat?.sender?.id!!,
+                receiverId = chat?.receiver?.id!!,
+                timestamp = System.currentTimeMillis(),
+                type = "rec",
+                chatId = chat!!.id,
+            )
+            println("NEW_VOICE_MESSAGE: $newVoiceMessage")
+            repository.insertMessage(newVoiceMessage)
+
             isRecording.value = !it
         }
     }

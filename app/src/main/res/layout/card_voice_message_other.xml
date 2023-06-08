@@ -22,10 +22,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp">
-
-
-
+        android:paddingStart="@dimen/d0_8"
+        android:layout_marginBottom="@dimen/d0_6"
+        >
         <ImageView
             android:id="@+id/image_group_chat_profile"
             android:src="@drawable/iv_user_osama"
@@ -91,7 +90,7 @@
                             tools:visibility="gone"
                             android:layout_margin="@dimen/d0_8"
                             android:text="Stop"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             />
                         <ImageView
                             android:id="@+id/play_button"

@@ -39,6 +39,7 @@
         android:layout_marginTop="@dimen/d1_8"
         android:layout_marginStart="@dimen/d0_8"
         android:layout_marginEnd="@dimen/d0_2"
+        android:layout_marginBottom="@dimen/d0_6"
         android:paddingEnd="@dimen/d1_8"
         android:paddingStart="@dimen/d0_2"
         >

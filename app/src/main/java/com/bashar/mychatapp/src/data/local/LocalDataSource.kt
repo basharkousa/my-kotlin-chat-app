@@ -77,11 +77,14 @@ class LocalDataSource @Inject constructor(
         val messages = listOf(
             Message(1, 1, 2, 1, "Hello Osama", "msg", System.currentTimeMillis()),
             Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1000),
-            Message(3, 1, 2, 1, "How are you?", "msg", System.currentTimeMillis() + 2000),
+            Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1500),
+            Message(3, 2, 1, 1, "/file.mp3", "rec", System.currentTimeMillis() + 2000),
             Message(4, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 3000),
             Message(5, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 4000),
             Message(6, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 5000),
+            Message(6, 1, 2, 1, "/my_voice.mp3", "rec", System.currentTimeMillis() + 5000),
             Message(7, 1, 2, 1, "What r u doing today?", "msg", System.currentTimeMillis() + 6000),
+            Message(7, 1, 2, 1, "/my_voice.mp3", "rec", System.currentTimeMillis() + 6000),
 
             )
         messages.forEach { message ->
