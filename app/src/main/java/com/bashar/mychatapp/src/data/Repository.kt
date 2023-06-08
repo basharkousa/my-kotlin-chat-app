@@ -1,7 +1,9 @@
 package com.bashar.mychatapp.src.data
 
 import com.bashar.mychatapp.src.data.local.LocalDataSource
+import com.bashar.mychatapp.src.data.models.Chat
 import com.bashar.mychatapp.src.data.models.User
+import com.bashar.mychatapp.src.data.models.Message
 import com.bashar.mychatapp.src.data.models.base.BaseApiResponse
 import com.bashar.mychatapp.src.data.remote.RemoteDataSource
 import dagger.hilt.android.scopes.ActivityRetainedScoped
@@ -23,6 +25,13 @@ class Repository @Inject constructor(
 
     fun getAllUsers() = localDataSource.getAllUsers().flowOn(Dispatchers.IO)
     fun getAllChats(userId: Int) = localDataSource.getAllChats(userId).flowOn(Dispatchers.IO)
+
+    fun getMessages(chatId: Int) = localDataSource.getMessages(chatId).flowOn(Dispatchers.IO)
+
+    suspend fun insertMessage(message: Message) = withContext(Dispatchers.IO) {
+        localDataSource.insertMessage(message)
+    }
+
 
     fun getUserUserByEmail(email: String): Flow<User?> = flow{
         localDataSource.getUserByEmail(email).collect{

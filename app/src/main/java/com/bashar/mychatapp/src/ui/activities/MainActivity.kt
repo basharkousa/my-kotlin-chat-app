@@ -3,9 +3,13 @@ package com.bashar.mychatapp.src.ui.activities
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.databinding.ActivityMainBinding
 import com.bashar.mychatapp.src.ui.base.BaseActivity
+import com.bashar.mychatapp.src.ui.fragments.splashFragment.SplashViewModel
+import com.bashar.mychatapp.src.viewmodels.UserViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
 

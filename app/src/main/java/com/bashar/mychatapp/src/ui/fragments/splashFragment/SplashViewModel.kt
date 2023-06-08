@@ -28,7 +28,7 @@ class SplashViewModel @Inject constructor(
 
     var navigateLivedata: MutableLiveData<Boolean> = MutableLiveData(false)
     fun goToUsersPage() = viewModelScope.launch {
-       delay(2000)
+       delay(1300)
        navigateLivedata.value =  true
 
     }

@@ -9,15 +9,15 @@
             name="viewModel"
             type="com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationViewModel" />
 
-        <import type="android.view.View" />
+<!--        <import type="android.view.View" />-->
 
-        <variable
-            name="click"
-            type="View.OnClickListener" />
+<!--        <variable-->
+<!--            name="click"-->
+<!--            type="View.OnClickListener" />-->
 
-        <variable
-            name="itemclick"
-            type="com.bashar.mychatapp.src.ui.listeners.RvClickListener" />
+<!--        <variable-->
+<!--            name="itemclick"-->
+<!--            type="com.bashar.mychatapp.src.ui.listeners.RvClickListener" />-->
 
     </data>
 
@@ -136,18 +136,63 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d4"
-                click="@{itemclick}"
-                layout="@{@layout/card_chat}"
-                list="@{viewModel.chatsList}"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/d0_2"
+                android:layout_marginBottom="@dimen/d5"
+                app:bind_disable_item_animator="@{true}"
+                app:bind_messages_list="@{viewModel.messageList}"
+                tools:listitem="@layout/card_message_other"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 android:scrollbars="vertical"
                 />
+
+
+
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutChatbox"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d5"
+            android:background="@android:color/white"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <EditText
+                android:id="@+id/editTextMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="70"
+                android:background="@android:color/transparent"
+                android:hint="@string/enter_message"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="6"
+                android:text="@={viewModel.newMessageText}"
+                />
+
+            <Button
+                android:id="@+id/sendBtn"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:onClick="@{() -> viewModel.sendMessagePressed()}"
+                android:text="@string/send"
+                android:textSize="14sp" />
+        </LinearLayout>
+
     </FrameLayout>
 </layout>

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Message(
-    val id: Int,
+    val id: Int? = 0,
     val senderId: Int,
     val receiverId: Int,
     val chatId: Int,

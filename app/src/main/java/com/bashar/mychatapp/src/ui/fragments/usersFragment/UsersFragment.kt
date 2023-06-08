@@ -28,9 +28,7 @@ class UsersFragment : BaseFragment<UserViewModel, FragmentUsersBinding>() {
     override val layoutRes: Int = R.layout.fragment_users
 
     override fun initEvents() {
-        dataBinding?.buttonSecond?.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {
@@ -58,6 +56,7 @@ class UsersFragment : BaseFragment<UserViewModel, FragmentUsersBinding>() {
                         when (view.id) {
                             R.id.card_user -> {
                                 navigateTo(UsersFragmentDirections.actionUsersFragmentToChatsFragment(item))
+                                viewModel.currentUser = item
                             }
 //                            R.id.tv_artist_name -> {
 //                                Toast.makeText(parent, "$position ${item.name}", Toast.LENGTH_SHORT)

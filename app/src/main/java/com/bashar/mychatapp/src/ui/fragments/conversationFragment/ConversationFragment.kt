@@ -2,8 +2,11 @@ package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bashar.mychatapp.R
 import com.bashar.mychatapp.databinding.FragmentChatsBinding
 import com.bashar.mychatapp.databinding.FragmentConversationBinding
@@ -12,16 +15,20 @@ import com.bashar.mychatapp.src.ui.base.BaseFragment
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
 import com.bashar.mychatapp.src.ui.fragments.chatsFragment.ChatsViewModel
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
+import com.bashar.mychatapp.src.viewmodels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
 class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConversationBinding>() {
 
-
     override val viewModel: ConversationViewModel by viewModels()
     override val layoutRes: Int = R.layout.fragment_conversation
+    val userViewModel: UserViewModel by activityViewModels()
+
+
+    private lateinit var listAdapter: ConversationAdapter
+    private lateinit var listAdapterObserver: RecyclerView.AdapterDataObserver
 
     override fun initEvents() {
 //        dataBinding?.buttonSecond?.setOnClickListener {
@@ -32,8 +39,8 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
     override fun initFragment(savedInstanceState: Bundle?) {
         initRecycler()
         initListeners()
-        dataBinding!!.itemclick = mainClickListener
-        dataBinding!!.click = parent as MainActivity
+//        dataBinding!!.itemclick = mainClickListener
+//        dataBinding!!.click = parent as MainActivity
     }
 
     override fun onBackPressed(): Boolean {
@@ -108,6 +115,23 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
     lateinit var layoutManager: LinearLayoutManager
     private fun initRecycler() {
         println("initRecycler")
+
+
+//        layoutManager = LinearLayoutManager(parent!!.applicationContext)
+//        layoutManager.reverseLayout = true
+//        dataBinding?.recycler?.layoutManager = layoutManager
+
+        listAdapterObserver = (object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                dataBinding?.recycler?.scrollToPosition(positionStart)
+            }
+        })
+        listAdapter =
+            ConversationAdapter(viewModel, userViewModel.currentUser!!.id)
+        listAdapter.registerAdapterDataObserver(listAdapterObserver)
+        dataBinding?.recycler?.adapter = listAdapter
+
+
         /*todo
            If you want to consider this action just remove the 'orientation' from the configChanges in
            manifest file
@@ -124,8 +148,9 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
 //                    .toInt()
 //            )
 //        )
-        layoutManager = LinearLayoutManager(parent!!.applicationContext)
-        dataBinding?.recycler?.layoutManager = layoutManager
+//        layoutManager = LinearLayoutManager(parent!!.applicationContext)
+//        layoutManager.reverseLayout = true
+//        dataBinding?.recycler?.layoutManager = layoutManager
 
         //init_listener();
 //        if (adapter == null) {
@@ -134,5 +159,10 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
 //            // Open subject when click on it
 //
 //        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listAdapter.unregisterAdapterDataObserver(listAdapterObserver)
     }
 }

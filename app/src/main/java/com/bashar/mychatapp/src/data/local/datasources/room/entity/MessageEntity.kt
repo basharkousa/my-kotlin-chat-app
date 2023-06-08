@@ -18,7 +18,7 @@ import com.bashar.mychatapp.src.data.models.Message
             childColumns = ["chat_id"])
     ])
 data class MessageEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val sender_id: Int,
     val receiver_id: Int,
     val chat_id: Int,
@@ -29,13 +29,13 @@ data class MessageEntity(
     companion object {
         fun from(message: Message): MessageEntity{
             return MessageEntity(
-                id = message.id,
+//                id = message.id,
                 type = message.type,
                 chat_id = message.chatId,
                 sender_id = message.senderId,
                 receiver_id = message.receiverId,
                 message = message.message,
-                timestamp = message.timestamp
+                timestamp = message.timestamp,
             )
         }
     }

@@ -16,4 +16,6 @@
     <string name="log_in_into_your_account">Login into your account</string>
     <string name="chats">chats</string>
     <string name="conversation_fragment_label">Conversation Fragment</string>
+    <string name="enter_message">Enter message</string>
+    <string name="send">SEND</string>
 </resources>

@@ -62,7 +62,7 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:minWidth="100dp"
-                    android:text="Last message wich sent in the conversation"
+                    android:text="todo:Last message which is sent in this conversation"
                     android:singleLine="true"
                     android:textSize="14sp" />
 

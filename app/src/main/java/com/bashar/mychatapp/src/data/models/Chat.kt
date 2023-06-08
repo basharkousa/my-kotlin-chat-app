@@ -8,5 +8,6 @@ data class Chat(
     val id: Int,
     val user1_id: Int,
     val user2_id: Int,
-    var receiver: User = User(0,"User","","", image = "")
+    var receiver: User = User(0,"User","","", image = ""),
+    var sender: User = User(0,"User","","", image = ""),
 ) : Parcelable

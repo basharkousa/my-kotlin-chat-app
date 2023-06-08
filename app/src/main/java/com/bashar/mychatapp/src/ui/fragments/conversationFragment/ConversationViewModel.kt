@@ -1,10 +1,12 @@
 package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bashar.mychatapp.src.data.Repository
 import com.bashar.mychatapp.src.data.models.Chat
+import com.bashar.mychatapp.src.data.models.Message
 import com.bashar.mychatapp.src.data.models.User
 import com.bashar.mychatapp.src.utils.MutableListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,26 +17,58 @@ import javax.inject.Inject
 class ConversationViewModel @Inject constructor(
     private val repository: Repository,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel(){
+) : ViewModel() {
 
 
     var chat: Chat? = null
 
-    var chatsList: MutableListLiveData<Chat?>? = MutableListLiveData(mutableListOf())
+    var messageList: MutableListLiveData<Message?>? = MutableListLiveData(mutableListOf())
+
+    var receiverUser: User? = null
 
     init {
         chat = savedStateHandle.get<Chat>("Chat")
+        receiverUser = chat?.receiver
         println("CONVERSATION_FRAGMENT: ${chat?.receiver?.name}")
+        getMessages(chat?.id ?: 1)
     }
 
-    private fun getAllChats(userId: Int) = viewModelScope.launch {
+    private fun getMessages(chatId: Int) = viewModelScope.launch {
 
-        repository.getAllChats(userId).collect{ chats ->
+        repository.getMessages(chatId).collect { messages ->
 //            chatsList?.addAll(chats)
-            chats.forEach {
-                println(it.toString())
-                chatsList?.add(it)
-            }
+            messageList?.clear()
+            messageList?.addAll(messages)
+//            messages.forEach {
+//                println(it.toMessage().toString())
+//                messageList?.add(it.toMessage())
+//            }
+            println("MessagesSize: ${messageList?.size}")
+
+        }
+    }
+
+    val newMessageText = MutableLiveData<String?>("")
+
+    fun sendMessagePressed() = viewModelScope.launch{
+        if (!newMessageText.value.isNullOrBlank()) {
+
+            println("NEW_MESSAGE: ${newMessageText.value}")
+
+            val newMsg = Message(
+                message = newMessageText.value!!,
+                senderId = chat?.sender?.id!!,
+                receiverId = chat?.receiver?.id!!,
+                timestamp = System.currentTimeMillis(),
+                type = "msg",
+                chatId = chat!!.id,
+            )
+            println("NEW_MESSAGE: ${newMsg}")
+
+            repository.insertMessage(newMsg)
+//           dbRepository.updateNewMessage(chatID, newMsg)
+//           dbRepository.updateChatLastMessage(chatID, newMsg)
+            newMessageText.value = null
         }
     }
 

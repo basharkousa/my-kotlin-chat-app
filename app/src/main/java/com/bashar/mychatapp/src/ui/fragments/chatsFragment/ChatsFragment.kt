@@ -54,6 +54,7 @@ class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
                     is Chat -> {
                         when (view.id) {
                             R.id.card_chat -> {
+                                item.sender = viewModel.user!!
                                 navigateTo(ChatsFragmentDirections.actionChatsFragmentToConversationFragment(item))
                             }
 //                            R.id.tv_artist_name -> {

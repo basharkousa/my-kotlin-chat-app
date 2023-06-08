@@ -16,11 +16,10 @@ class UserViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
-    var list  = mutableListOf<String>("Bahsra","Kousa","mksjkao")
-    var message = "Hello My Templateeeee"
-
-
     var usersList: MutableListLiveData<User?>? = MutableListLiveData(mutableListOf())
+
+    var currentUser:User? = null
+
 
     init {
         showAllUsers()

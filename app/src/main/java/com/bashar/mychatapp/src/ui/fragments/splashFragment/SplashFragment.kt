@@ -23,7 +23,7 @@ class SplashFragment : BaseFragment<SplashViewModel,FragmentSplashBinding>() {
 
       dataBinding?.rootLayout?.setOnClickListener {
 
-          navigateTo(SplashFragmentDirections.actionSplashFragmentToUsersFragment())
+//          navigateTo(SplashFragmentDirections.actionSplashFragmentToUsersFragment())
 //          findNavController().navigate(R.id.action_splashFragment_to_rootFragment)
 
       }

@@ -1,5 +1,6 @@
 package com.bashar.mychatapp.src.databinding
 
+import android.annotation.SuppressLint
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
@@ -13,13 +14,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bashar.mychatapp.BR
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
 import com.bashar.mychatapp.R
+import com.bashar.mychatapp.src.data.models.Message
 import com.bashar.mychatapp.src.data.models.base.NetworkResult
 import com.bashar.mychatapp.src.ui.base.GlobalAdapter
+import com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationAdapter
+import com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationViewModel
 import com.bashar.mychatapp.src.utils.AnimationUtils
 
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlin.math.abs
+
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 object BindingAdapterss {
@@ -190,6 +199,78 @@ object BindingAdapterss {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("bind_messages_list")
+    fun bindMessagesList(listView: RecyclerView, items: List<Message>?) {
+        items?.let {
+            println("CURRENT_ADAPTER_LIST:${(listView.adapter as ConversationAdapter).currentList.size} ITEMS:${items.size}")
+            (listView.adapter as ConversationAdapter).submitList(items)
+            listView.scrollToPosition(items.size - 1)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind_message", "bind_message_viewModel")
+    fun View.bindShouldMessageShowTimeText(message: Message, viewModel: ConversationViewModel) {
+        val halfHourInMilli = 1800000
+        val index = viewModel.messageList?.value!!.indexOf(message)
+
+        if (index == 0) {
+            this.visibility = View.VISIBLE
+        } else {
+            val messageBefore = viewModel.messageList?.value!![index - 1]
+
+            if (abs(messageBefore!!.timestamp - message.timestamp) > halfHourInMilli) {
+                this.visibility = View.VISIBLE
+            } else {
+                this.visibility = View.GONE
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind_disable_item_animator")
+    fun bindDisableRecyclerViewItemAnimator(recyclerView: RecyclerView, disable: Boolean) {
+        if (disable) {
+            recyclerView.itemAnimator = null
+        }
+
+    }
+
+    @JvmStatic
+    @SuppressLint("SimpleDateFormat")
+    @BindingAdapter("bind_epochTimeMsToDate_with_days_ago")
+    fun TextView.bindEpochTimeMsToDateWithDaysAgo(epochTimeMs: Long) {
+        val numOfDays = TimeUnit.MILLISECONDS.toDays(Date().time - epochTimeMs)
+
+        this.text = when {
+            numOfDays == 1.toLong() -> "Yesterday"
+            numOfDays > 1.toLong() -> "$numOfDays days ago"
+            else -> {
+                val pat =
+                    SimpleDateFormat().toLocalizedPattern().replace("\\W?[YyMd]+\\W?".toRegex(), " ")
+                val formatter = SimpleDateFormat(pat, Locale.getDefault())
+                formatter.format(Date(epochTimeMs))
+            }
+        }
+    }
+
+    @JvmStatic
+    @SuppressLint("SimpleDateFormat")
+    @BindingAdapter("bind_epochTimeMsToDate")
+    fun TextView.bindEpochTimeMsToDate(epochTimeMs: Long) {
+        if (epochTimeMs > 0) {
+            val currentTimeMs = Date().time
+            val numOfDays = TimeUnit.MILLISECONDS.toDays(currentTimeMs - epochTimeMs)
+
+            val replacePattern = when {
+                numOfDays >= 1.toLong() -> "Yy"
+                else -> "YyMd"
+            }
+            val pat = SimpleDateFormat().toLocalizedPattern().replace("\\W?[$replacePattern]+\\W?".toRegex(), " ")
+            val formatter = SimpleDateFormat(pat, Locale.getDefault())
+            this.text = formatter.format(Date(epochTimeMs))
+        }
+    }
 
 }
-
