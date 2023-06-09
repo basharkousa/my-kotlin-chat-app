@@ -1,8 +1,12 @@
 package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,9 +35,30 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
     private lateinit var listAdapterObserver: RecyclerView.AdapterDataObserver
 
     override fun initEvents() {
+
         dataBinding?.btnBack?.setOnClickListener {
             parent?.navController?.navigateUp()
         }
+
+        dataBinding?.recordBtnParent?.setOnClickListener {
+
+            if (ContextCompat.checkSelfPermission(parent!!, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    parent!!,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    1
+                )
+            } else {
+                viewModel.startRecording(parent?.externalCacheDir)
+            }
+        }
+
+        dataBinding?.stopRecordBtnParent?.setOnClickListener{
+            viewModel.stopRecording()
+        }
+
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {
@@ -81,45 +106,10 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
                 }
             }
         }
-
-//        dataBinding!!.recycler.addOnScrollListener(object : RecyclerViewPaginator(dataBinding!!.recycler) {
-//
-//            override val isLastPage: Boolean
-//                get() = viewModel.isLastPage()
-//
-//            override fun loadMore(start: Long, count: Long) {
-//                println("start: ${start} count: ${count}")
-//
-//                viewModel.getNewPage()
-////                Toast.makeText(parent,"endOfScroll",Toast.LENGTH_SHORT).show()
-//
-//            }
-//        })
-
-
-//        dataBinding!!.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//
-//                if (!recyclerView.canScrollVertically(1) ) {
-//                    Toast.makeText(parent,"endOfScroll",Toast.LENGTH_LONG).show()
-//                    recyclerView.adapter.
-//                    //Implement button dim here. Example:
-//                    //mybutton.setAlpha(0.5f);
-//                }
-//
-//            }
-//        })
     }
 
-    lateinit var layoutManager: LinearLayoutManager
     private fun initRecycler() {
         println("initRecycler")
-
-
-//        layoutManager = LinearLayoutManager(parent!!.applicationContext)
-//        layoutManager.reverseLayout = true
-//        dataBinding?.recycler?.layoutManager = layoutManager
 
         listAdapterObserver = (object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -131,38 +121,19 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
         listAdapter.registerAdapterDataObserver(listAdapterObserver)
         dataBinding?.recycler?.adapter = listAdapter
 
-
-        /*todo
-           If you want to consider this action just remove the 'orientation' from the configChanges in
-           manifest file
-        */
-
-//        layoutManager =
-//            if (parent!!.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) GridLayoutManager(
-//                parent!!.applicationContext, 2
-//            ) else GridLayoutManager(parent!!.applicationContext, 3)
-//        dataBinding!!.recycler.layoutManager = layoutManager
-//        dataBinding!!.recycler.addItemDecoration(
-//            SpacesItemDecoration(
-//                parent!!.resources.getDimension(R.dimen.d0_4)
-//                    .toInt()
-//            )
-//        )
-//        layoutManager = LinearLayoutManager(parent!!.applicationContext)
-//        layoutManager.reverseLayout = true
-//        dataBinding?.recycler?.layoutManager = layoutManager
-
-        //init_listener();
-//        if (adapter == null) {
-//            dataBinding.recycler.setAdapter(adapter);
-//            dataBinding.recycler.addItemDecoration(new SpacesItemDecoration((int) parent.getResources().getDimension(R.dimen.d0_4)));
-//            // Open subject when click on it
-//
-//        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         listAdapter.unregisterAdapterDataObserver(listAdapterObserver)
     }
+
+
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            viewModel.stopRecording()
+//        }
+//    }
+
 }

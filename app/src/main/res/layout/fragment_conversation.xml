@@ -267,7 +267,7 @@
                     android:layout_alignParentRight="true"
                     android:id="@+id/record_btn_parent"
                     android:visibility="@{viewModel.isRecording ? View.GONE : View.VISIBLE}"
-                    android:onClick="@{() -> viewModel.recordVoice()}"
+
                     >
                     <ImageView
                         android:layout_height="44dp"
@@ -286,7 +286,6 @@
                     android:layout_alignParentRight="true"
                     android:visibility="@{viewModel.isRecording ? View.VISIBLE : View.GONE}"
                     android:id="@+id/stop_record_btn_parent"
-                    android:onClick="@{() -> viewModel.stopRecordVoice()}"
                     >
                     <ImageView
                         android:layout_height="44dp"
