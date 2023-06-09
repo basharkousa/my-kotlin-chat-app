@@ -78,14 +78,10 @@ class LocalDataSource @Inject constructor(
             Message(1, 1, 2, 1, "Hello Osama", "msg", System.currentTimeMillis()),
             Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1000),
             Message(2, 2, 1, 1, "Hello Bashar", "msg", System.currentTimeMillis() + 1500),
-            Message(3, 2, 1, 1, "/file.mp3", "rec", System.currentTimeMillis() + 2000),
             Message(4, 2, 1, 1, "Doing well, thanks", "msg", System.currentTimeMillis() + 3000),
             Message(5, 1, 2, 1, "Same here", "msg", System.currentTimeMillis() + 4000),
             Message(6, 2, 1, 1, "Great!", "msg", System.currentTimeMillis() + 5000),
-            Message(6, 1, 2, 1, "/my_voice.mp3", "rec", System.currentTimeMillis() + 5000),
             Message(7, 1, 2, 1, "What r u doing today?", "msg", System.currentTimeMillis() + 6000),
-            Message(7, 1, 2, 1, "/my_voice.mp3", "rec", System.currentTimeMillis() + 6000),
-
             )
         messages.forEach { message ->
             messageDao.insertMessage(MessageEntity.from(message))
@@ -104,7 +100,6 @@ class LocalDataSource @Inject constructor(
     fun deleteAllUser() = userDao.deleteAllUsers()
 
     //Chats
-//    fun getAllChats(userId: Int): Flow<List<ChatEntity>> = chatDao.getUserChats(userId)
 
     fun getAllChats(userId: Int): Flow<List<Chat>> = flow {
 
@@ -134,7 +129,8 @@ class LocalDataSource @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-//    fun getMessages(chatId: Int): Flow<List<MessageEntity>> = messageDao.getChatMessages(chatId)
+    //Messages
+
     fun getMessages(chatId: Int): Flow<List<Message>> = flow {
 
         val messageList = mutableListOf<Message>()
@@ -157,30 +153,6 @@ class LocalDataSource @Inject constructor(
 //        }
     }.flowOn(Dispatchers.IO)
 
-
-
     fun insertMessage(message: Message) = messageDao.insertMessage(MessageEntity.from(message))
 
-
-//    fun insertAlbum(album: Album) {
-//        println("LocalDataSource ${album.name}")
-////        albumDao.insertAlbum(
-////            AlbumEntity(
-////                mbid = "1",
-////                name = "Bashar",
-////                playcount = 1,
-////                url = "oma",
-////                image = "https:\\/\\/lastfm.freetls.fastly.net\\/i\\/u\\/34s\\/0db2be6f7dca7f6b97b2e96fa6ac2d54.jpg",
-////                listeners = "100"
-////            )
-////        )
-//
-//        albumDao.insertAlbum(AlbumEntity.from(album))
-//    }
-//
-//    fun updateAlbum(album: Album) = albumDao.updateAlbum(AlbumEntity.from(album))
-//
-//    fun deleteAlbum(album: Album) = albumDao.deleteAlbum(AlbumEntity.from(album))
-//
-//    fun deleteAll() = albumDao.deleteAll()
 }

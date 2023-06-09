@@ -25,11 +25,8 @@ class ConversationViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-
     var chat: Chat? = null
-
     var messageList: MutableListLiveData<Message?>? = MutableListLiveData(mutableListOf())
-
     var receiverUser: User? = null
 
     init {
@@ -177,8 +174,6 @@ class ConversationViewModel @Inject constructor(
         }
         mediaPlayer = null
 
-
     }
-
 
 }

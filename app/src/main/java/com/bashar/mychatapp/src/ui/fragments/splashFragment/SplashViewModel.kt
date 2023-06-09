@@ -30,7 +30,6 @@ class SplashViewModel @Inject constructor(
     fun goToUsersPage() = viewModelScope.launch {
        delay(1300)
        navigateLivedata.value =  true
-
     }
 
     private fun doTransactions() = viewModelScope.launch {

@@ -63,49 +63,10 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
 
     override fun initFragment(savedInstanceState: Bundle?) {
         initRecycler()
-        initListeners()
-//        dataBinding!!.itemclick = mainClickListener
-//        dataBinding!!.click = parent as MainActivity
     }
 
     override fun onBackPressed(): Boolean {
         return false
-    }
-
-    private lateinit var mainClickListener: RvClickListener
-    private fun initListeners() {
-        mainClickListener = object : RvClickListener {
-            override fun click(
-                view: View,
-                item: Any?,
-                position: Int,
-                adapter: GlobalAdapter<Any>,
-            ) {
-                when (item) {
-                    is String -> {
-                        when (view.id) {
-                            R.id.card_user -> {
-                                parent?.showToastMessage(item)
-                            }
-//                            R.id.tv_artist_name -> {
-//                                Toast.makeText(parent, "$position ${item.name}", Toast.LENGTH_SHORT)
-//                                    .show()
-//                            }
-                        }
-                    }
-//                    is NewsCategory -> {
-//                        when (view.id) {
-//                            R.id.rv_news_main_cv -> {
-//                                view as MaterialCardView
-//                                view.background.setTint(Color.CYAN)
-//                                Toast.makeText(this@MainActivity, "$position", Toast.LENGTH_SHORT)
-//                                    .show()
-//                            }
-//                        }
-//                    }
-                }
-            }
-        }
     }
 
     private fun initRecycler() {

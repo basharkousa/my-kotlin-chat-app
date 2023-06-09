@@ -33,34 +33,6 @@ import java.util.concurrent.TimeUnit
 
 object BindingAdapterss {
 
-    @BindingAdapter("showOnSuccess")
-    @JvmStatic
-    fun ViewGroup.showOnSuccess(responseState: NetworkResult<*>) {
-        println("showOnSuccess")
-        visibility = if (responseState is NetworkResult.Success)
-            View.VISIBLE
-        else
-            View.GONE
-    }
-
-    @BindingAdapter("showOnLoading")
-    @JvmStatic
-    fun ViewGroup.showOnLoading(responseState: NetworkResult<*>) {
-        visibility = if (responseState is NetworkResult.Loading)
-            View.VISIBLE
-        else
-            View.GONE
-    }
-
-    @BindingAdapter("showOnError")
-    @JvmStatic
-    fun ViewGroup.showOnError(responseState: NetworkResult<*>) {
-        visibility = if (responseState is NetworkResult.Error)
-            View.VISIBLE
-        else
-            View.GONE
-    }
-
     @BindingAdapter("hideOnLoading")
     @JvmStatic
     fun ViewGroup.hideOnLoading(responseState: NetworkResult<*>) {
@@ -69,23 +41,6 @@ object BindingAdapterss {
         else
             View.VISIBLE
     }
-
-//    @BindingAdapter("showOnLoading")
-//    fun ProgressBar.showOnLoading(responseState: NetworkResult<*>) {
-//        visibility = if (responseState is NetworkResult.Loading)
-//            View.VISIBLE
-//        else
-//            View.GONE
-//    }
-
-//    @BindingAdapter("showOnError")
-//    fun TextView.showError(responseState: NetworkResult<*>) {
-//        visibility = if (responseState is NetworkResult.Error)
-//            View.VISIBLE
-//        else
-//            View.GONE
-//        text = (responseState as NetworkResult.Error).message
-//    }
 
 
 //@JvmStatic
@@ -106,7 +61,7 @@ object BindingAdapterss {
     @BindingAdapter("html")
     @JvmStatic
     fun setTextViewHTML(view: View, html: String?) {
-//        Log.e("OSA_", url[1].text)
+
         val textView = view as TextView
 
         if (!html.isNullOrEmpty()) {
@@ -125,24 +80,6 @@ object BindingAdapterss {
         }
 
     }
-
-
-//    @JvmStatic
-//    @BindingAdapter("profileImage")
-//    fun loadImage(view: ImageView, profileImage: String) {
-//        Glide.with(view.context)
-//            .load(profileImage)
-//            .into(view)
-//    }
-
-//    @BindingAdapter("duration_value")
-//    @JvmStatic
-//    fun formatSecondd(view: View, duration: Int) {
-//        val textView = view as TextView
-//        val durationInt = duration.toInt()
-//        textView.setText(BasicTools.formatSeconds(durationInt))
-//    }
-
 
     @BindingAdapter("android:visibility")
     @JvmStatic
@@ -163,7 +100,6 @@ object BindingAdapterss {
             view.visibility = View.GONE
         }
     }
-
 
     @BindingAdapter("android:visibility", "scaleAnim")
     @JvmStatic
