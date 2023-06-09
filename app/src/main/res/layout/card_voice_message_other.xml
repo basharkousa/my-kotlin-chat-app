@@ -1,81 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <!--        <import type="android.view.View" />-->
-        <!--        <variable-->
-        <!--            name="click"-->
-        <!--            type="android.view.View.OnClickListener" />-->
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.bashar.mychatapp.src.ui.fragments.conversationFragment.ConversationViewModel" />
 
         <variable
             name="model"
-            type= "com.bashar.mychatapp.src.data.models.Message" />
+            type="com.bashar.mychatapp.src.data.models.Message" />
 
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/d0_8"
         android:layout_marginBottom="@dimen/d0_6"
-        >
+        android:paddingStart="@dimen/d0_8">
+
         <ImageView
             android:id="@+id/image_group_chat_profile"
-            android:src="@drawable/iv_user_osama"
-            imgUrl="@{viewModel.receiverUser.image}"
             circular="@{true}"
-            android:layout_alignWithParentIfMissing="true"
+            imgUrl="@{viewModel.receiverUser.image}"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"/>
+            android:src="@drawable/iv_user_osama" />
 
         <TextView
-            android:text="@{viewModel.receiverUser.name}"
             android:id="@+id/text_group_chat_nickname"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/image_group_chat_profile"
             android:layout_alignTop="@id/image_group_chat_profile"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/image_group_chat_profile"
+            android:text="@{viewModel.receiverUser.name}"
+            android:textSize="16sp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_group_chat_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/image_group_chat_profile"
-            android:layout_below="@id/text_group_chat_nickname"
             android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@id/text_group_chat_nickname"
+            android:layout_toRightOf="@id/image_group_chat_profile"
             app:cardBackgroundColor="@color/white"
-            app:cardUseCompatPadding="true"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
-            app:cardPreventCornerOverlap="false">
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:id="@+id/group_chat_message_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
+                android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/d0_8"
-                    android:paddingBottom="@dimen/d0_8"
                     android:paddingLeft="12dp"
+                    android:paddingTop="@dimen/d0_8"
                     android:paddingRight="12dp"
-                    >
+                    android:paddingBottom="@dimen/d0_8">
 
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -85,22 +81,25 @@
                             android:id="@+id/stop_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/d0_8"
+                            android:onClick="@{()->viewModel.stopPlaying(model)}"
                             android:src="@drawable/ic_pause"
+                            android:visibility="@{model.isPlaying?View.VISIBLE:View.GONE}"
                             app:tint="@color/primary"
                             tools:visibility="gone"
-                            android:layout_margin="@dimen/d0_8"
-                            android:text="Stop"
-                            android:visibility="gone"
+
                             />
+
                         <ImageView
                             android:id="@+id/play_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_play"
-                            app:tint="@color/primary"
                             android:layout_margin="@dimen/d0_8"
-                            android:text="Stop"
-                            android:visibility="visible"
+                            android:onClick="@{()->viewModel.startPlaying(model)}"
+                            android:src="@drawable/ic_play"
+                            android:visibility="@{model.isPlaying?View.GONE:View.VISIBLE}"
+                            app:tint="@color/primary"
+
                             />
                     </FrameLayout>
 
@@ -114,13 +113,13 @@
                         android:progress="100" />
 
                     <TextView
-                        android:layout_margin="@dimen/d0_8"
                         android:id="@+id/duration_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text="10:11" />
+                        android:layout_margin="@dimen/d0_8"
+                        android:text="10:11"
+                        android:textColor="@color/black" />
 
 
                 </LinearLayout>
@@ -131,17 +130,16 @@
 
         <TextView
             android:id="@+id/text_group_chat_time"
-            android:textSize="10dp"
-            android:text="21:27"
-            android:textColor="#8e8e8e"
-            tools:text="11:40"
-            app:bind_epochTimeMsToDate="@{model.timestamp}"
-            android:layout_toRightOf="@id/card_group_chat_message"
-            android:layout_alignBottom="@id/card_group_chat_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/card_group_chat_message"
             android:layout_marginBottom="4dp"
-            />
+            android:layout_toRightOf="@id/card_group_chat_message"
+            android:text="21:27"
+            android:textColor="#8e8e8e"
+            android:textSize="10dp"
+            app:bind_epochTimeMsToDate="@{model.timestamp}"
+            tools:text="11:40" />
 
     </RelativeLayout>
 
