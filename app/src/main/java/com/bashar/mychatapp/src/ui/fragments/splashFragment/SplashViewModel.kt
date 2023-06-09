@@ -1,10 +1,7 @@
 package com.bashar.mychatapp.src.ui.fragments.splashFragment
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bashar.mychatapp.src.data.Repository
 import com.bashar.mychatapp.src.data.local.datasources.room.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,37 +15,44 @@ class SplashViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val isFirstLaunchLiveData = repository.isFirstLaunch().asLiveData()
+    var isFirstLaunch = false
+
     init {
         println("TRANSACTIONS STARTS HERE:")
-        doTransactions()
+//        doTransactions()
         showAllUsers()
         getUserByEmail()
         goToUsersPage()
     }
 
-    var navigateLivedata: MutableLiveData<Boolean> = MutableLiveData(false)
-    fun goToUsersPage() = viewModelScope.launch {
-       delay(1300)
-       navigateLivedata.value =  true
+    fun setFirstLaunch() = viewModelScope.launch {
+        repository.toggleIsFirstLaunch()
     }
 
-    private fun doTransactions() = viewModelScope.launch {
+    var navigateLivedata: MutableLiveData<Boolean> = MutableLiveData(false)
+    fun goToUsersPage() = viewModelScope.launch {
+        delay(1300)
+        navigateLivedata.value = true
+    }
+
+    fun doTransactions() = viewModelScope.launch {
         repository.doAllTransActions()
     }
 
     private fun showAllUsers() = viewModelScope.launch {
-        repository.getAllUsers().collect{ users ->
+        repository.getAllUsers().collect { users ->
             users.forEach {
                 println(it.toUser().toString())
             }
         }
     }
 
-    private fun getUserByEmail(email : String = "basharkousax@gmail.com") = viewModelScope.launch {
-        repository.getUserUserByEmail(email).collect{ user ->
-            if(user != null){
+    private fun getUserByEmail(email: String = "basharkousax@gmail.com") = viewModelScope.launch {
+        repository.getUserUserByEmail(email).collect { user ->
+            if (user != null) {
                 println("LOGGED_USER: $user")
-            }else{
+            } else {
                 println("LOGGED_USER: User Not Found")
             }
         }

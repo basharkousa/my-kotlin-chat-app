@@ -16,9 +16,9 @@
     </data>
     <androidx.cardview.widget.CardView
         android:id="@+id/card_user"
-        app:cardCornerRadius="@dimen/d0_8"
+        app:cardCornerRadius="@dimen/d0_4"
         android:layout_margin="@dimen/d1_8"
-        android:elevation="@dimen/d0_8"
+        android:elevation="@dimen/d0_4"
         android:onClick="@{click::onClick}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -51,9 +51,11 @@
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
                    android:textSize="@dimen/medium_text"
-                   android:fontFamily="@font/poppins_bold"
+                   android:fontFamily="@font/poppinsregular"
                    android:gravity="start"
+                   android:textColor="@color/black"
                    android:text="@{model.name}"
+                   tools:text = "bahsar"
                    />
                <TextView
                    android:id="@+id/email"

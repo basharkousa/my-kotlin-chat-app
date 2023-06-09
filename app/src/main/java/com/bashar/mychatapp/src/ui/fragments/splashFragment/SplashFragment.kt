@@ -37,6 +37,28 @@ class SplashFragment : BaseFragment<SplashViewModel,FragmentSplashBinding>() {
          }
      }
 
+     viewModel.isFirstLaunchLiveData.observe(parent!!){
+         println("ISFRIST"+it)
+
+         viewModel.isFirstLaunch = it
+         if(viewModel.isFirstLaunch){
+             viewModel.doTransactions()
+             viewModel.setFirstLaunch()
+             println("IS_FIRST_LAUNCH:")
+         }else{
+             println("IS_NOT_FIRST_LAUNCH:")
+         }
+
+//        if(isFirstLaunch.value == null){
+//            doTransactions()
+//            repository.toggleIsFirstLaunch()
+//            println("IS_FIRST_LAUNCH:")
+//        }else{
+//            println("IS_NOT_FIRST_LAUNCH:")
+//        }
+
+     }
+
     }
 
     override fun onBackPressed(): Boolean {

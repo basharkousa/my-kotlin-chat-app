@@ -3,6 +3,7 @@ package com.bashar.mychatapp.src.data.local
 
 import androidx.room.Transaction
 import com.bashar.mychatapp.R
+import com.bashar.mychatapp.src.data.local.datasources.dataStore.prefsdataStore.AppPreferences
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.ChatDao
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.MessageDao
 import com.bashar.mychatapp.src.data.local.datasources.room.dao.UserDao
@@ -27,7 +28,8 @@ import javax.inject.Inject
 class LocalDataSource @Inject constructor(
     private val userDao: UserDao,
     private val chatDao: ChatDao,
-    private val messageDao: MessageDao
+    private val messageDao: MessageDao,
+    private val appPreferences: AppPreferences
 ) {
 
     @Transaction
@@ -89,6 +91,9 @@ class LocalDataSource @Inject constructor(
 
     }
 
+
+    fun isFirstLaunch() = appPreferences.isFirstLaunch()
+    suspend fun toggleFirstLaunch() = appPreferences.toggleIsFirstLaunch()
 
     //User
     fun getUser(): Flow<UserEntity?> = userDao.user

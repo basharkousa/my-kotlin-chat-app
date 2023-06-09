@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bashar.mychatapp.BR
 import com.bashar.mychatapp.src.ui.listeners.RvClickListener
@@ -219,5 +221,23 @@ object BindingAdapterss {
             this.text = formatter.format(Date(epochTimeMs))
         }
     }
+
+
+//    @JvmStatic
+//    @BindingAdapter("refreshOnChange")
+//    fun refreshOnChange(view: View, liveData: LiveData<*>) {
+//        liveData.observe(view.viewLifecycleOwner), Observer {
+//            view.invalidate()
+//        })
+//    }
+
+//    @JvmStatic
+//    @BindingAdapter("refreshOnChange")
+//    fun refreshOnChange(view: View, liveData: LiveData<*>, lifecycleOwner: LifecycleOwner) {
+//        liveData.observe(lifecycleOwner){
+//            view.invalidate()
+//        }
+//    }
+
 
 }

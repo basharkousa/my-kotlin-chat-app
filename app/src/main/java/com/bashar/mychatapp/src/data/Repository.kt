@@ -19,6 +19,10 @@ class Repository @Inject constructor(
     private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource
 ) {
 
+
+    fun isFirstLaunch() = localDataSource.isFirstLaunch().flowOn(Dispatchers.IO)
+    suspend fun toggleIsFirstLaunch() = localDataSource.toggleFirstLaunch()
+
     suspend fun doAllTransActions() = withContext(Dispatchers.IO){
         localDataSource.doAllTransActions()
     }
