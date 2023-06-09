@@ -18,4 +18,6 @@
     <string name="conversation_fragment_label">Conversation Fragment</string>
     <string name="enter_message">Enter message</string>
     <string name="send">SEND</string>
+
+    <string name="fragment_tag_view_group">my_fragment_tag</string>
 </resources>

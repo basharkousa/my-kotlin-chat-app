@@ -78,7 +78,7 @@ class ConversationFragment : BaseFragment<ConversationViewModel, FragmentConvers
             }
         })
         listAdapter =
-            ConversationAdapter(viewModel, userViewModel.currentUser!!.id)
+            ConversationAdapter(this, viewModel, userViewModel.currentUser!!.id)
         listAdapter.registerAdapterDataObserver(listAdapterObserver)
         dataBinding?.recycler?.adapter = listAdapter
 

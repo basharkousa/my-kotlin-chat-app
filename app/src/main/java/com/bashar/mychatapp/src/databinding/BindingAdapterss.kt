@@ -7,9 +7,14 @@ import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -221,23 +226,6 @@ object BindingAdapterss {
             this.text = formatter.format(Date(epochTimeMs))
         }
     }
-
-
-//    @JvmStatic
-//    @BindingAdapter("refreshOnChange")
-//    fun refreshOnChange(view: View, liveData: LiveData<*>) {
-//        liveData.observe(view.viewLifecycleOwner), Observer {
-//            view.invalidate()
-//        })
-//    }
-
-//    @JvmStatic
-//    @BindingAdapter("refreshOnChange")
-//    fun refreshOnChange(view: View, liveData: LiveData<*>, lifecycleOwner: LifecycleOwner) {
-//        liveData.observe(lifecycleOwner){
-//            view.invalidate()
-//        }
-//    }
 
 
 }

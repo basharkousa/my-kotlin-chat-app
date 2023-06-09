@@ -1,7 +1,9 @@
 package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bashar.mychatapp.databinding.CardMessageMeBinding
@@ -12,8 +14,11 @@ import com.bashar.mychatapp.databinding.CardVoiceMessageMeBinding
 import com.bashar.mychatapp.databinding.CardVoiceMessageOtherBinding
 
 
-class ConversationAdapter internal constructor(private val viewModel: ConversationViewModel, private val userId: Int)
-    : ListAdapter<Message, RecyclerView.ViewHolder>(MessageDiffCallback()) {
+class ConversationAdapter internal constructor(
+    private val fragment: Fragment,
+    private val viewModel: ConversationViewModel,
+    private val userId: Int
+) : ListAdapter<Message, RecyclerView.ViewHolder>(MessageDiffCallback()) {
 
     private val holderTypeMessageReceived = 1
     private val holderTypeMessageSent = 2
@@ -29,7 +34,7 @@ class ConversationAdapter internal constructor(private val viewModel: Conversati
         }
     }
 
-    class ReceivedViewHolder(private val binding:CardMessageOtherBinding) :
+    class ReceivedViewHolder(private val binding: CardMessageOtherBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(viewModel: ConversationViewModel, item: Message) {
             binding.viewModel = viewModel
@@ -38,7 +43,16 @@ class ConversationAdapter internal constructor(private val viewModel: Conversati
         }
     }
 
-    class SentVoiceViewHolder(private val binding: CardVoiceMessageMeBinding) :
+    class SentVoiceViewHolder(val binding: CardVoiceMessageMeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(fragment: Fragment, viewModel: ConversationViewModel, item: Message) {
+            binding.viewModel = viewModel
+            binding.model = item
+            binding.executePendingBindings()
+        }
+    }
+
+    class ReceivedVoiceViewHolder( val binding: CardVoiceMessageOtherBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(viewModel: ConversationViewModel, item: Message) {
             binding.viewModel = viewModel
@@ -46,27 +60,17 @@ class ConversationAdapter internal constructor(private val viewModel: Conversati
             binding.executePendingBindings()
         }
     }
-
-    class ReceivedVoiceViewHolder(private val binding: CardVoiceMessageOtherBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(viewModel: ConversationViewModel, item: Message) {
-            binding.viewModel = viewModel
-            binding.model = item
-            binding.executePendingBindings()
-        }
-    }
-
 
 
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position).senderId != userId) {
-            when(getItem(position).type){
-                "rec"-> holderTypeVoiceMessageReceived
+            when (getItem(position).type) {
+                "rec" -> holderTypeVoiceMessageReceived
                 else -> holderTypeMessageReceived
             }
         } else {
-            when(getItem(position).type){
-                "rec"-> holderTypeVoiceMessageSent
+            when (getItem(position).type) {
+                "rec" -> holderTypeVoiceMessageSent
                 else -> holderTypeMessageSent
 
             }
@@ -83,14 +87,52 @@ class ConversationAdapter internal constructor(private val viewModel: Conversati
                 viewModel,
                 getItem(position)
             )
-            holderTypeVoiceMessageReceived -> (holder as ReceivedVoiceViewHolder).bind(
-                viewModel,
-                getItem(position)
-            )
-            holderTypeVoiceMessageSent -> (holder as SentVoiceViewHolder).bind(
-                viewModel,
-                getItem(position)
-            )
+            holderTypeVoiceMessageReceived -> {
+                (holder as ReceivedVoiceViewHolder).bind(
+                    viewModel,
+                    getItem(position)
+                )
+                getItem(position).isPlaying.observe(fragment.viewLifecycleOwner){ isPlayning->
+                    println("DOPaying ->$isPlayning")
+                    if(isPlayning){
+                        holder.binding.playButton.visibility = View.GONE
+                        holder.binding.stopButton.visibility = View.VISIBLE
+                    }
+                    else{
+                        holder.binding.playButton.visibility = View.VISIBLE
+                        holder.binding.stopButton.visibility = View.GONE
+                    }
+//                    holder.itemView.post{
+////                        notifyItemChanged(position)
+//                    }
+
+
+                }
+
+            }
+            holderTypeVoiceMessageSent -> {
+                (holder as SentVoiceViewHolder).bind(
+                    fragment,
+                    viewModel,
+                    getItem(position)
+                )
+                getItem(position).isPlaying.observe(fragment.viewLifecycleOwner) { isPlayning ->
+                    println("DOPaying ->$isPlayning")
+                    if (isPlayning) {
+                        holder.binding.playButton.visibility = View.GONE
+                        holder.binding.stopButton.visibility = View.VISIBLE
+                    } else {
+                        holder.binding.playButton.visibility = View.VISIBLE
+                        holder.binding.stopButton.visibility = View.GONE
+                    }
+//                    holder.itemView.post{
+////                        notifyItemChanged(position)
+//                    }
+
+
+                }
+
+            }
         }
     }
 
@@ -126,10 +168,10 @@ class ConversationAdapter internal constructor(private val viewModel: Conversati
 
 class MessageDiffCallback : DiffUtil.ItemCallback<Message>() {
     override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Message, newItem: Message): Boolean {
-        return oldItem.timestamp == newItem.timestamp
+        return oldItem.timestamp == newItem.timestamp && oldItem.isPlaying.value == newItem.isPlaying.value
     }
 }
