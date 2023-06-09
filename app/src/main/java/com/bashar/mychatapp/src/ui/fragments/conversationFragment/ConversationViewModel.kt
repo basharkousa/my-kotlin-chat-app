@@ -2,6 +2,8 @@ package com.bashar.mychatapp.src.ui.fragments.conversationFragment
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.os.CountDownTimer
+import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -14,6 +16,7 @@ import com.bashar.mychatapp.src.utils.MutableListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -74,7 +77,25 @@ class ConversationViewModel @Inject constructor(
     private var mediaRecorder: MediaRecorder? = null
     private var outputFile: String? = null
 
+
+
+    private var timer: Timer? = null
+    private val handler = Handler()
+
+
     fun startRecording(externalCacheDir: File?) = viewModelScope.launch {
+
+        recordingStartTime = System.currentTimeMillis()
+        timer = Timer()
+        timer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                handler.post {
+                    updateTimerUI()
+                }
+            }
+        }, 0, 1000)
+
+
         isRecording.value?.let {
             isRecording.value = !it
         }
@@ -92,7 +113,26 @@ class ConversationViewModel @Inject constructor(
 //        mediaRecorder.setMaxDuration()
     }
 
+
+
+    private var recordingStartTime: Long = 0
+
+    var timerTextLiveData = MutableLiveData("")
+
+    private fun updateTimerUI() {
+        val elapsedTime = System.currentTimeMillis() - recordingStartTime
+        val seconds = elapsedTime / 1000
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        val timerText = String.format("%02d:%02d", minutes, remainingSeconds)
+        timerTextLiveData.value = timerText
+    }
+
+
     fun stopRecording() = viewModelScope.launch {
+        timer?.cancel()
+        timer = null
+
         mediaRecorder?.apply {
             stop()
             release()
@@ -120,16 +160,17 @@ class ConversationViewModel @Inject constructor(
 
     private var mediaPlayer: MediaPlayer? = null
 
-    fun startPlaying() = viewModelScope.launch {
+    fun startPlaying(message: Message) = viewModelScope.launch {
+        message.isPlaying.value = true
         mediaPlayer = MediaPlayer().apply {
-            setDataSource(outputFile)
+            setDataSource(message.message)
             prepare()
             start()
         }
     }
 
-    fun stopPlaying() = viewModelScope.launch {
-
+    fun stopPlaying(message: Message) = viewModelScope.launch {
+        message.isPlaying.value = false
         mediaPlayer?.apply {
             stop()
             release()

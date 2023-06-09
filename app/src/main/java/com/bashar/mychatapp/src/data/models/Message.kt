@@ -1,6 +1,8 @@
 package com.bashar.mychatapp.src.data.models
 
 import android.os.Parcelable
+import androidx.lifecycle.MutableLiveData
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -11,5 +13,10 @@ data class Message(
     val chatId: Int,
     val message: String,
     val type: String,
-    val timestamp: Long
-) : Parcelable
+    val timestamp: Long,
+) : Parcelable {
+
+    @IgnoredOnParcel
+    val isPlaying = MutableLiveData<Boolean>(false)
+
+}
